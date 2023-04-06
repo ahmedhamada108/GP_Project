@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\DiseasesSeeder;
+use Database\Seeders\SubDiseasesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Record diseases in DB
+        $this->call(DiseasesSeeder::class);
+        $this->call(SubDiseasesSeeder::class);
+
     }
 }

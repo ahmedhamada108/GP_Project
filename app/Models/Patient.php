@@ -13,7 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Patient extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $table= 'Patient';
+    protected $table= 'patient';
 
     protected $fillable = [
         'id',
