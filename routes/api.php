@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Diseases\Alzahimar_Disease;
+use App\Http\Controllers\API\Diseases\OCT_Disease;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -32,6 +33,7 @@ Route::group(['middleware'=>['change.lang']], function(Router $router)
     Route::post('ResendOTPMail', [PatientForgetPassword::class,'ResendOTPMail']);
 
     Route::post('alzahimar', [Alzahimar_Disease::class,'SendAlzahimar']);
+    Route::post('OCT', [OCT_Disease::class,'SendOCT']);
 
 
 });

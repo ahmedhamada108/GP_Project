@@ -47,6 +47,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'OCTImages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/OCTImages'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
