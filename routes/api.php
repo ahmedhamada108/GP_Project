@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Diseases\Alzahimar_Disease;
 use App\Http\Controllers\API\Diseases\Brain_Stroke_Disease;
 use App\Http\Controllers\API\Diseases\OCT_Disease;
+use App\Http\Controllers\API\Diseases\XRay_Disease;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -36,6 +37,7 @@ Route::group(['middleware'=>['change.lang']], function(Router $router)
     Route::post('alzahimar', [Alzahimar_Disease::class,'SendAlzahimar']);
     Route::post('OCT', [OCT_Disease::class,'SendOCT']);
     Route::post('BrainStroke', [Brain_Stroke_Disease::class,'SendBrainStroke']);
+    Route::post('Chest_XRay', [XRay_Disease::class,'SendXRay']);
 
 
 
