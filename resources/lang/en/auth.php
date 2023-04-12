@@ -26,6 +26,6 @@ return [
     'please_try_again'=> 'Please Try Again',
     'OTP_is_incorrect' => 'OTP is incorrect.',
     'OTP_is_correct' => 'OTP is correct',
-    'the_password_has_been_changed_successfully'=> 'The Password has been changed successfully.'
-
+    'the_password_has_been_changed_successfully'=> 'The Password has been changed successfully.',
+    'The_Language_has_been_updated' => 'The Language has been updated',
 ];

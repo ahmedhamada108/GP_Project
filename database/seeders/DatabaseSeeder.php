@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // Record diseases in DB
         $this->call(DiseasesSeeder::class);
         $this->call(SubDiseasesSeeder::class);
+        $this->call(CitiesSeeder::class);
 
     }
 }

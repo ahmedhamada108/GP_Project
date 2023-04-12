@@ -26,5 +26,6 @@ return [
     'please_try_again'=> 'الرجاء المحاوله مرة اخري',
     'OTP_is_incorrect' => 'الكود التاكيدي غير صحيح',
     'OTP_is_correct' => 'الكود التاكيدي صحيح',
-    'the_password_has_been_changed_successfully'=> 'تم تغير كلمه المرور بنجاح'
+    'the_password_has_been_changed_successfully'=> 'تم تغير كلمه المرور بنجاح',
+    'The_Language_has_been_updated' => 'تم تحديث اللغة'
 ];

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\API\Diseases;
 
-
 use App\Models\history;
-use Illuminate\Http\Request;
+use App\Models\Diseases;
 
+use Illuminate\Http\Request;
+use App\Http\Traits\ResponseTrait;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Models\SubDiseasesDescription;
 use App\Http\Traits\RequestModelsTrait;
-use App\Http\Traits\ResponseTrait;
-use App\Models\Diseases;
+use App\Http\Traits\VezeetaScraping;
 
 class Alzahimar_Disease extends Controller
 {
@@ -48,7 +49,24 @@ class Alzahimar_Disease extends Controller
                     'sub_disease_id' => $sub_disease->id,
                     'image' => $data['image']
                 ]);
-                return $this->returnData('Result Check',$sub_disease);
+                $Doctors = new VezeetaScraping();
+                if($result_value == "Non Dementia" || $result_value == 'Normal'){
+                    if(App::getLocale()=="en"){
+                        $VezzetaDoctors = null;
+                        return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
+                    }else{
+                        $VezzetaDoctors = null;
+                        return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
+                    }
+                }else{
+                    if(App::getLocale()=="en"){
+                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($request->city_patient,'neurology');;
+                        return $this->returnDataMultiArray('Result Checks',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
+                    }else{
+                        $VezzetaDoctors = $Doctors->GetDoctorArabic($request->city_patient,'مخ-واعصاب');
+                        return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
+                    }
+                }
             }else{
                 return $this->returnError('E500', 'Please login to your account');
                 // check login student

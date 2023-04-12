@@ -10,6 +10,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Patient\Auth_Patient;
 use App\Http\Controllers\API\Patient\PatientForgetPassword;
+use App\Http\Controllers\API\Patient\VezeetaScraping;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,11 @@ use App\Http\Controllers\API\Patient\PatientForgetPassword;
 */
 
 
-Route::group(['middleware'=>['change.lang']], function(Router $router)
+Route::group(['middleware'=>['change.lang']], function(Router $router) 
 {
+
     Route::post('register_patient', [Auth_Patient::class,'postRegistration']);
+    Route::post('logout_patient', [Auth_Patient::class,'logout']);
     Route::post('login_patient', [Auth_Patient::class,'postLogin']);
     Route::post('ResendVerifyMail', [Auth_Patient::class,'ResendVerifyMail']);
     
@@ -39,7 +42,9 @@ Route::group(['middleware'=>['change.lang']], function(Router $router)
     Route::post('BrainStroke', [Brain_Stroke_Disease::class,'SendBrainStroke']);
     Route::post('Chest_XRay', [XRay_Disease::class,'SendXRay']);
 
+    Route::post('GetDoctorEnglish', [VezeetaScraping::class,'GetDoctorEnglish']);
+    Route::post('GetDoctorArabic', [VezeetaScraping::class,'GetDoctorArabic']);
 
 
 });
-Route::get('account/verify/{token}', [Auth_Patient::class, 'verifyAccount'])->name('user.verify'); 
+Route::get('account/verify/{token}', [Auth_Patient::class, 'verifyAccount'])->name('user.verify');

@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\PatientVerify;
 use App\Http\Traits\ResponseTrait;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\PatientAuthTrait;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -101,7 +103,8 @@ class Auth_Patient extends Controller
                         'email' => $patient->email,
                         'token' => $patient->Token,
                     ];
-                    // filter the response 
+                    // filter the response  
+                    
                     return $this->returnData('Patient', $patient, __('auth.login_success'));
                 }
             }
@@ -127,12 +130,26 @@ class Auth_Patient extends Controller
             if ($token) {
                 JWTAuth::setToken($token)->invalidate();
                 return $this->returnSuccessMessage(__('auth.Logout_successfully'));
-            } else {
+            }else {
                 return $this->returnError('E500', 'Token invalid');
             }
         } catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
+
+    }
+
+    public function ChangeLanguage(Request $request){
+        try{
+            if($request->lang === 'ar'){
+                app()->setLocale('ar');
+            }else{
+                app()->setLocale('en');
+            }
+            return $this->returnSuccessMessage("done");    
+        }catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        } 
 
     }
 }

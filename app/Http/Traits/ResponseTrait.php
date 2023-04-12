@@ -47,6 +47,16 @@ trait ResponseTrait
             $key => $value
         ]);
     }
+    public function returnDataMultiArray($key, $value, $key2,$value2, $msg = "")
+    {
+        return response()->json([
+            'status' => true,
+            'errNum' => "S000",
+            'msg' => $msg,
+            $key => $value,
+            $key2 => $value2
+        ]);
+    }
 
 
     //////////////////
