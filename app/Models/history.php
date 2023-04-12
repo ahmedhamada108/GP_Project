@@ -19,12 +19,19 @@ class history extends Model
     {
         return $this->hasOne(patient::class);
     }
-    public function diseases()
+    public function disease()
     {
-        return $this->hasOne(Diseases::class);
+        return $this->hasOne(Diseases::class,'id','disease_id');
     }
     public function sub_disease()
     {
-        return $this->hasOne(SubDiseasesDescription::class);
+        return $this->hasOne(SubDiseasesDescription::class,'id','sub_disease_id');
+    }
+    public function GetPatientHistory($patient_id){
+       $history = history::with(
+            ['disease','disease:id,diseases_name_'.app()->getLocale().' as disease_name',
+            'sub_disease','sub_disease:id,sub_disease_'.app()->getLocale().' as Sub_disease_name'
+            ])->where('patient_id',$patient_id)->get();
+            return $history;
     }
 }
