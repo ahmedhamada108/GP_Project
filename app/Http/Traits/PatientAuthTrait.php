@@ -30,6 +30,14 @@ trait PatientAuthTrait
         'password' => $data['password']
       ]);
     }
+    private function Update_Patient($id,array $data){
+      return Patient::where('id',$id)->first()->update([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => $data['password'],
+        'image'=> $data['image'] ?? 'https://placehold.co/80x80?text=user+image'
+      ]);
+    }
     private function CreateOTPSendIt($id,$request){
         $token = random_int(10000,99999);
         $is_exists = PatientVerify::where('Token',$token)->first();

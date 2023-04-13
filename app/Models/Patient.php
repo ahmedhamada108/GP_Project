@@ -20,6 +20,7 @@ class Patient extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'image',
         'is_email_verified'
     ];
 

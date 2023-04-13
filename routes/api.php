@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Patient\Auth_Patient;
 use App\Http\Controllers\API\Patient\PatientForgetPassword;
 use App\Http\Controllers\API\Patient\PatientHistoryController;
+use App\Http\Controllers\API\Patient\UpdateAccountController;
 use App\Http\Controllers\API\Patient\VezeetaScraping;
 
 /*
@@ -46,6 +47,7 @@ Route::group(['middleware'=>['change.lang']], function(Router $router)
     Route::post('GetDoctorEnglish', [VezeetaScraping::class,'GetDoctorEnglish']);
     Route::post('GetDoctorArabic', [VezeetaScraping::class,'GetDoctorArabic']);
     Route::get('PatientHistory', [PatientHistoryController::class,'PatientHistory']);
+    Route::post('UpdateAccount', [UpdateAccountController::class,'UpdateAccount']);
 
 
 });
