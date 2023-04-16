@@ -1,0 +1,90 @@
+/* global rules */
+body {
+    font-family: "Cairo", sans-serif;
+}
+a {
+    text-decoration: none;
+}
+:root {
+    --main-color: #2196F3;
+}
+/* global rules */
+
+/* sign-up */
+.sign-in {
+    text-align: center;
+    padding-top: 10px;
+}
+.sign-in h2 {
+    margin-bottom: 50px;
+    font-weight: bold;
+    font-size: 35px;
+    color: var(--main-color);
+}
+.sign-in .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.sign-in .form .input {
+    width: 500px;
+    padding: 15px;
+    border: none;
+    border-bottom: 1px solid var(--main-color);
+    border-radius: 50px;
+    caret-color: var(--main-color);
+    margin-bottom: 20px;
+}
+.sign-in .form .resetpasswordinput {
+    width: 500px;
+    padding: 15px;
+    border: none;
+    background-color: #ececec !important;
+    border-bottom: 1px solid var(--main-color);
+    border-radius: 50px;
+    caret-color: var(--main-color);
+    margin-bottom: 20px;
+}
+@media (max-width: 771px) {
+    .sign-in .form .input {
+        border-radius: 0;
+    }
+}
+.sign-in .form .input:focus {
+    outline: none;
+}
+
+.sign-in .form .input::placeholder {
+    transition: opacity 0.7s;
+}
+
+.sign-in .form .input:focus::placeholder {
+    opacity: 0;
+}
+.sign-in .form .submit {
+    border-radius: 30px;
+    width: fit-content;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: none;
+    background-color: var(--main-color);
+    color: white;
+    font-weight: bold;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 15px auto 10px;
+}
+
+.sign-in .form .submit:hover {
+    background-color: #1787E0;
+}
+.sign-in .signP {
+    letter-spacing: 1px;
+}
+.sign-in .signP > a {
+    color: var(--main-color);
+    text-decoration: underline;
+}
+/* sign-up */

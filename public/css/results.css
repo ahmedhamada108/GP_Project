@@ -1,0 +1,153 @@
+/* global rules */
+body {
+    font-family: "Cairo", sans-serif;
+}
+:root {
+    --main-color: #2196F3;
+    --main-color-alt: #1787E0;
+    --main-transition: 0.3s;
+}
+a {
+    text-decoration: none;
+}
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* small */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+/* small */
+/* medium */
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+/* medium */
+/* large */
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+/* large */
+/* global rules */
+
+/* heading */
+.main-heading {
+    text-align: center;
+}
+.main-heading h2 {
+    font-weight: normal;
+    font-size: 30px;
+    color: var(--main-color);
+    position: relative;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+.main-heading h2::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    background-color: black;
+    bottom: -20px;
+    width: 190px;
+}
+.main-heading h2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    border: 2px solid black;
+    bottom: -28px;
+    background-color: white;
+}
+.main-heading p {
+    width: 500px;
+    margin: 0 auto 50px;
+    max-width: 100%;
+    line-height: 2;
+    color: #777;
+}
+/* heading */
+
+/* doctors */
+.results {
+    padding-top: 10px;
+    position: relative;
+    margin-bottom: 50px;
+}
+.results .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px;
+    padding-top: 50px;
+}
+.results .box {
+    -webkit-box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform var(--main-transition), box-shadow var(--main-transition);
+}
+.results .box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 2px 15px rgb(0 0 0 / 20%);
+}
+.results .box img {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+}
+.results .box .content {
+    padding: 20px;
+}
+.results .box .content h3 {
+    margin: 0;
+    color: var(--main-color-alt);
+    text-align: center;
+}
+.results .box .content p {
+    margin: 10px 0 0;
+    line-height: 1.5;
+    color: #777;
+}
+.results .box .info {
+    padding: 10px;
+}
+.results .box .info a {
+    color: var(--main-color);
+    font-weight: bold;
+    transition: var(--main-transition);
+}
+.results .box .info a:hover {
+    color: var(--main-color-alt);
+}
+.results .box .info a::after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-width: 9px;
+    border-color: transparent transparent transparent var(--main-color);
+    margin-left: 9px;
+    transition: var(--main-transition);
+}
+.results .box .info:hover a::after {
+    border-color: transparent transparent transparent var(--main-color-alt);
+}
+/* doctors */

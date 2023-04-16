@@ -44,6 +44,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'patient-api',
         ],
+        'patient' => [
+            'driver' => 'session',
+            'provider' => 'patients',
+        ],
     ],
 
     /*
@@ -69,6 +73,10 @@ return [
             'model' => App\Models\User::class,
         ],
         'patient-api' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Patient::class,
+        ],
+        'patients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Patient::class,
         ],
