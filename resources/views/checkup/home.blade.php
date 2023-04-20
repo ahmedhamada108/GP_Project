@@ -29,62 +29,21 @@
     <div class="disease" id="disease">
         <h2 class="main-title">Diseases</h2>
         <div class="container">
+        @foreach($diseases as $disease)
             <div class="box">
-                <img src="{{ asset('imgs/ill1.jpeg') }}" alt="ill1">
+                <img src="{{ $disease->image }}" alt="ill1">
                 <div class="content">
-                    <h3>Alzheimer Disease</h3>
-                    <p>It is a progressive neurological disorder that causes the brain to shrink and die,
-                        and it is a condition that includes a persistent decrease in the ability to think
-                        and in behavioral and social skills.
+                    <h3>{{ $disease->disease_name }}</h3>
+                    <p>
+                        {{ $disease->diseases_description }}
                     </p>
                 </div>
                 <div class="info">
-                    <a href="#">Read more</a>
+                    <a href="{{ route('single_disease',$disease->disease_name) }}">Read more</a>
                     <i class="fas fa-long-arrow-alt-right"></i>
                 </div>
             </div>
-            <div class="box">
-                <img src="{{ asset('imgs/ill2.jpeg') }}" alt="ill2">
-                <div class="content">
-                    <h3>Corneal Disease</h3>
-                    <p>It is the condition of the cornea protruding forward in a conical shape when it
-                        becomes weak and thinner and cannot maintain its natural shape, which affects
-                        vision and causes myopia.
-                    </p>
-                </div>
-                <div class="info">
-                    <a href="#">Read more</a>
-                    <i class="fas fa-long-arrow-alt-right"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="{{ asset('imgs/ill3.jpeg') }}" alt="ill3">
-                <div class="content">
-                    <h3>Skin Cancer Disease</h3>
-                    <p>It is an abnormal proliferation of skin cells that in most cases arises and 
-                        develops on the face of the skin that is exposed to a lot of sunlight, however
-                        this type can develop on the skin are not exposed to the sun a lot.
-                    </p>
-                </div>
-                <div class="info">
-                    <a href="#">Read more</a>
-                    <i class="fas fa-long-arrow-alt-right"></i>
-                </div>
-            </div>
-            <div class="box">
-                <img src="{{ asset('imgs/ill3.jpeg') }}" alt="ill3">
-                <div class="content">
-                    <h3>Skin Cancer Disease</h3>
-                    <p>It is an abnormal proliferation of skin cells that in most cases arises and 
-                        develops on the face of the skin that is exposed to a lot of sunlight, however
-                        this type can develop on the skin are not exposed to the sun a lot.
-                    </p>
-                </div>
-                <div class="info">
-                    <a href="#">Read more</a>
-                    <i class="fas fa-long-arrow-alt-right"></i>
-                </div>
-            </div>
+        @endforeach    
         </div>
     </div>
     <!-- disease -->

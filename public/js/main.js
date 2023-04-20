@@ -13,7 +13,6 @@
 
 //faq toggle stuff 
 $('.togglefaq').click(function(e) {
-e.preventDefault();
 var notthis = $('.active').not(this);
 notthis.toggleClass('active').next('.faqanswer').slideToggle(150);
  $(this).toggleClass('active').next().slideToggle("fast");
@@ -37,5 +36,31 @@ let digitValidate = function(ele){
     }
     event.preventDefault(); // prevent form submission on hitting "Enter"
   }
-  
+
+
+  /// file upload 
+// Display image 
+
+document.getElementById('file_input').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function() {
+    document.getElementById('image_chosen').src = reader.result;
+    document.getElementById('image_chosen').style.borderRadius = "46px";
+    var fileInfo = document.getElementById('fileinfo');
+    fileInfo.innerHTML = file.name + " (" + formatBytes(file.size) + ")";
+  }
+  reader.readAsDataURL(file);
+});
+
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+
   

@@ -18,7 +18,7 @@ class Alzahimar_Disease extends Controller
     //
     use RequestModelsTrait, ResponseTrait;
     public function SendAlzahimar(Request $request){
-        try{
+        // try{
             if(auth('patient-api')->id() != null){
                 $data = $request->validate([
                     'image' => 'required|image'
@@ -30,12 +30,11 @@ class Alzahimar_Disease extends Controller
                 $data['image']= '/storage/AlzahimarImages/'.$img_name;
                 $model_url = "http://185.38.148.55/alzheimer_model";
                 $storage_filename = "AlzahimarImages";
-                $imagename= "1679557078.jpg";
-                $result = $this->RequestModel($model_url,$storage_filename,$imagename);
+                $result = $this->RequestModel($model_url,$storage_filename,$img_name);
                 $result_value = $result['Result'];
                 $disease = Diseases::select(
                         'id',
-                        'diseases_name_'.app()->getLocale().' as disease_name',
+                        'diseases_name_'.app()->getLocale().' as disease_name'
                     )->where('diseases_name_en','Alzheimer')->first();
 
                 $sub_disease = SubDiseasesDescription::select(
@@ -52,18 +51,22 @@ class Alzahimar_Disease extends Controller
                 $Doctors = new VezeetaScraping();
                 if($result_value == "Non Dementia" || $result_value == 'Normal'){
                     if(App::getLocale()=="en"){
-                        $VezzetaDoctors = null;
+                        $VezzetaDoctors = [];
+                        $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
                         return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }else{
-                        $VezzetaDoctors = null;
+                        $VezzetaDoctors = [];
+                        $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
                         return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }
                 }else{
                     if(App::getLocale()=="en"){
-                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($request->city_patient,'neurology');;
-                        return $this->returnDataMultiArray('Result Checks',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
+                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($request->city_patient,'neurology');
+                        $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
+                        return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }else{
                         $VezzetaDoctors = $Doctors->GetDoctorArabic($request->city_patient,'مخ-واعصاب');
+                        $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
                         return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }
                 }
@@ -71,8 +74,8 @@ class Alzahimar_Disease extends Controller
                 return $this->returnError('E500', 'Please login to your account');
                 // check login student
             }      
-        }catch (\Exception $ex) {
-            return $this->returnError($ex->getCode(), $ex->getMessage());
-        }    
+        // }catch (\Exception $ex) {
+        //     return $this->returnError($ex->getCode(), $ex->getMessage());
+        // }    
     }
 }

@@ -51,14 +51,19 @@ class VezeetaScraping extends Controller
             $description = $node->filter('.gtJINS h3')->text();
             $address= $node->filter('.gtJINS .wnblj .blwPZf')->text();
             $fee= $node->filter('.gtJINS .wnblj span[itemprop="priceRange"]')->text();
-            $doctor_image = $node->filter('.kbqvaU span .jsolsr, .fLQsGf img')->attr('src');
+            $doctor_image = $node->filter('.kbqvaU span > div > img');
+            if ($doctor_image->attr('src') != null) {
+                $doctor_image = $doctor_image->attr('src');
+            } else {
+                $doctor_image = $doctor_image->attr('data-src');
+            }
             $doctor_profile = $node->filter('.gtJINS a')->attr('href');
             $doctor_data[] = [
                 'Doctor_name' => $doctor . " " .$doctor_name,
                 'Doctor_description' => $description,
                 'Address' => $address,
                 'Doctor_fee' => $fee. ' EPG',
-                'Doctor_image' => $doctor_image,
+                'Doctor_image' => $doctor_image ? $doctor_image : 'https://d1aovdz1i2nnak.cloudfront.net/vezeeta-web-reactjs/54241/_next/static/images/avatar.png',
                 'Doctor_profile' => 'https://www.vezeeta.com'.$doctor_profile
             ];
         });
@@ -81,15 +86,19 @@ class VezeetaScraping extends Controller
             $description = $node2->filter('.cIJIvF h3')->text();
             $address= $node2->filter('.cIJIvF .wnblj .blwPZf')->text();
             $fee= $node2->filter('.cIJIvF .wnblj span[itemprop="priceRange"]')->text();
-            $doctor_image = $node2->filter('.kbqvaU .fLQsGf img')->attr('src');
+            $doctor_image = $node2->filter('.kbqvaU span > div > img');
+            if ($doctor_image->attr('src') != null) {
+                $doctor_image = $doctor_image->attr('src');
+            } else {
+                $doctor_image = $doctor_image->attr('data-src');
+            }            
             $doctor_profile = $node2->filter('.cIJIvF a')->attr('href');
-
             $doctor_data[] = [
                 'Doctor_name' => $doctor . " " .$doctor_name,
                 'Doctor_description' => $description,
                 'Address' => $address,
                 'Doctor_fee' => $fee. ' جنيه ',
-                'Doctor_image' => $doctor_image,
+                'Doctor_image' => $doctor_image ? $doctor_image : 'https://d1aovdz1i2nnak.cloudfront.net/vezeeta-web-reactjs/54241/_next/static/images/avatar.png',
                 'Doctor_profile' => 'https://www.vezeeta.com'.$doctor_profile
             ];
         });

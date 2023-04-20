@@ -110,9 +110,10 @@ a {
     box-shadow: 0 2px 15px rgb(0 0 0 / 20%);
 }
 .results .box img {
-    width: 100%;
-    max-width: 100%;
-    height: 200px;
+    width: 197px;
+    height: 197px;
+    border-radius: 50%;
+    margin-left: 80px;
 }
 .results .box .content {
     padding: 20px;
