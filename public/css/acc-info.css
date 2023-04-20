@@ -1,0 +1,129 @@
+/* global rules */
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Cairo", sans-serif;
+}
+:root {
+    --main-color: #2196F3;
+    --main-color-alt: #1787E0;
+}
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* small */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+/* small */
+/* medium */
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+/* medium */
+/* large */
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+/* large */
+/* global rules */
+
+/* account info */
+.account {
+    position: relative;
+}
+.account h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: bold;
+    font-size: 35px;
+    color: var(--main-color);
+}
+.account h2 i {
+    color: var(--main-color-alt);
+    font-size: 25px;
+}
+.account .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 100px;
+}
+.account .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+}
+.account .image img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 25px;
+}
+.account .image span {
+    font-size: 25px;
+}
+.account .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.account .info .input {
+    width: 300px;
+    padding: 12px;
+    border: none;
+    border: 1px solid var(--main-color);
+    border-radius: 50px;
+    user-select: none;
+    caret-color: var(--main-color);
+    margin-bottom: 20px;
+}
+.account .info .input:focus {
+    outline: none;
+}
+.account .info span {
+    margin-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+.account .info span::after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-width: 9px;
+    border-color: var(--main-color-alt) transparent transparent transparent;
+    margin-left: 6px;
+    margin-top: 6px;
+}
+.account .log {
+    margin-top: -173px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    color: var(--main-color-alt);
+    margin-bottom: -28px;
+    left: 70%;
+    text-decoration: underline;
+}
+.account .log i {
+    color: var(--main-color);
+    font-size: 15px;
+}
+/* account info */

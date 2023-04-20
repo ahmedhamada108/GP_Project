@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ asset('css/sign-in.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/results.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/acc-info.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/history.css') }}" />
+
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +71,7 @@
                 @endforeach
 
                 @auth('patient')
-                    <li><a href="{{ route('logout') }}"><img style="width: 20px;" src="{{asset('imgs/icons8-logout.gif')}}" > </a></li>
+                    <li><a href="{{ route('account_view') }}"><img style="width: 30px;" src="{{asset('imgs/icons8-user.gif')}}" > </a></li>
                 @endauth
 
             </ul>
@@ -146,7 +149,7 @@
     <script src="https://kit.fontawesome.com/cb2611cb8b.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/popper.main.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/fileupload.js') }}"></script>
+    <script src="{{ asset('js/history.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>

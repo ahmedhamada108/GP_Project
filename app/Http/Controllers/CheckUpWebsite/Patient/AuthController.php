@@ -73,7 +73,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth('patient')->attempt($credentials)) {
 
-            return redirect()->route('dashboard');
+            return redirect()->route('account_view');
             // end login admin logic 
         }else{
             session()->flash('error','Oppes! You have entered invalid credentials');
@@ -81,12 +81,12 @@ class AuthController extends Controller
         }
     }// end post login func
 
-    public function dashboard(){
-        return view('checkup.result');
+    public function account_view(){
+        return view('checkup.account');
     }
     public function logout()
     {
         auth('patient')->logout();
-        return redirect('/login');
+        return redirect()->route('login');
     }// end logout func
 }

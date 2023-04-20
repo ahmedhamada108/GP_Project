@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckUpWebsite\HomeController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\CheckupWebsite\Patient\AuthController;
 use App\Http\Controllers\CheckUpWebsite\SingleDiseaseController;
+use App\Http\Controllers\CheckupWebsite\Patient\HistoryController;
 use App\Http\Controllers\CheckUpWebsite\Diseases\DiseasesModelsHanlding;
 use App\Http\Controllers\CheckUpWebsite\Patient\ResetPasswordController;
 
@@ -42,7 +43,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
 
     Route::group(['prefix'=>'patient','middleware' => ['CheckPatientLogin']], function()
     {
-        Route::get('/dashboard', [AuthController::class,'dashboard'])->name('dashboard');
+        Route::get('/account', [AuthController::class,'account_view'])->name('account_view');
+        Route::get('/history', [HistoryController::class,'History_view'])->name('history_view');
         Route::get('/logout', [AuthController::class,'logout'])->name('logout');
         // Route::get('/ResultCheck', [SingleDiseaseController::class,'SingleDisease_view'])->name('single_disease');
         Route::post('/ResultCheck', [DiseasesModelsHanlding::class,'SendModelRequest'])->name('result');
@@ -52,25 +54,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
 Route::get('account/verify/{token}', [Auth_Patient::class, 'verifyAccount'])->name('user.verify');
 
 Route::get('admin/loaction',function(){
-    $client = new Client();
-    $response = $client->get('https://api.ipify.org');
-
-    if ($response->getStatusCode() == 200) {
-        $ipAddress = $response->getBody();
-        $key = '4d618b4d-1e55-4e2f-82bf-29920d666ac0';
-        $client2 = new Client();
-        $headers = [
-            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-        ];
-        $response2 = $client2->get("https://apiip.net/api/check?ip={$ipAddress}&accessKey={$key}", [
-            'headers' => $headers,
-        ]);
-
-        if ($response2->getStatusCode() == 200) {
-            $responseData = json_decode($response->getBody(), true);
-            // do something with the response data
-            return $responseData;
-        }
-        // echo "Your public IP address is: " . $ipAddress;
-    }
+    //
+    return view('checkup.history');
 });
