@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Patient\Auth_Patient;
@@ -8,6 +9,7 @@ use App\Http\Controllers\CheckUpWebsite\HomeController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\CheckupWebsite\Patient\AuthController;
 use App\Http\Controllers\CheckUpWebsite\SingleDiseaseController;
+use App\Http\Controllers\CheckupWebsite\Patient\AccountController;
 use App\Http\Controllers\CheckupWebsite\Patient\HistoryController;
 use App\Http\Controllers\CheckUpWebsite\Diseases\DiseasesModelsHanlding;
 use App\Http\Controllers\CheckUpWebsite\Patient\ResetPasswordController;
@@ -53,7 +55,4 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
 });
 Route::get('account/verify/{token}', [Auth_Patient::class, 'verifyAccount'])->name('user.verify');
 
-Route::get('admin/loaction',function(){
-    //
-    return view('checkup.history');
-});
+Route::post('admin/loaction',[AccountController::class,'EditAccount']);;

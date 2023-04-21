@@ -135,6 +135,54 @@ a {
     color: var(--main-color) !important;
     background-color: #fafafa !important;
 }
+ 
+/* Drop down */
+#drop{
+    position: absolute;
+    transform: translate3d(0px, 72px, 0px);
+    top: 12px !important;
+    will-change: transform;
+    background-color: #fafafa !important;
+    border-radius: 11px;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+}
+.dropdown-menu li {
+    display: block;
+}
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    clear: both;
+    font-weight: normal;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.dropdown-menu a:hover, .dropdown-menu a:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: var(--main-color);}
+
 /* header */
 
 /* landing */
@@ -747,4 +795,25 @@ input[type=number]::-webkit-outer-spin-button {
 /* doctors table  */
 .th_doctor{
     color: var(--main-color);
+}
+
+/* Dropdown */
+.dropdown-menu{
+    position: absolute;
+    top: 100%;
+    right: -110px !important;
+    left : 0px !important;
+    z-index: 1000;
+    float: left ;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
 }

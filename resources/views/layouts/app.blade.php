@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/results.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/acc-info.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/history.css') }}" />
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,10 +70,27 @@
                     </li>
                 @endforeach
 
-                @auth('patient')
-                    <li><a href="{{ route('account_view') }}"><img style="width: 30px;" src="{{asset('imgs/icons8-user.gif')}}" > </a></li>
-                @endauth
-
+            @auth('patient')
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
+                        <img style="width: 30px;" src="{{asset('imgs/icons8-user.gif')}}" > 
+                    </a>
+                    <ul id="drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a href="{{ route('account_view') }}">
+                            <img style="width: 30px;" src="{{asset('imgs/icons8-user-96.png')}}" > 
+                            Account
+                        </a></li>
+                        <li><a href="{{ route('history_view') }}">
+                            <img style="width: 30px;" src="{{asset('imgs/icons8-history-96.png')}}" > 
+                            History
+                        </a></li>
+                        <li><a href="{{ route('logout') }}">
+                            <img style="width: 25px;" src="{{asset('imgs/icons8-logout-96.png')}}" > 
+                            Logout
+                        </a></li>
+                    </ul>
+                </li>
+            @endauth
             </ul>
         </div>
     </div>
