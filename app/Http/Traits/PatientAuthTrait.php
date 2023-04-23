@@ -31,16 +31,18 @@ trait PatientAuthTrait
       ]);
     }
     private function Update_Patient($id,array $data){
+      $patient = Patient::where('id', $id)->firstOrFail();
       $updateData = [
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'image' => $data['image'] ?? 'https://placehold.co/80x80?text=user+image'
-    ];
-    
-    if (isset($data['password'])) {
-        $updateData['password'] = $data['password'];
-    }
-    return Patient::where('id', $id)->first()->update($updateData);
+          'name' => $data['name'],
+          'email' => $data['email'],
+          'image' => $data['image'] ?? $patient->image
+      ];
+
+      if (isset($data['password'])) {
+          $updateData['password'] = $data['password'];
+      }
+
+      return $patient->update($updateData);
     }
     private function CreateOTPSendIt($id,$request){
         $token = random_int(10000,99999);

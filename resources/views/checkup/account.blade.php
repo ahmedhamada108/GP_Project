@@ -9,7 +9,7 @@
         <div class="image">
             <img src="{{ auth('patient')->user()->image }}" alt="profile image">
         </div>
-        <form class="form" enctype="multipart/form-data" method="POST"action="{{ url('admin/loaction') }}">
+        <form class="form" enctype="multipart/form-data" method="POST"action="{{ route('edit_account') }}">
           @csrf
           <div class="info">
             @include('layouts.sessions_messages')

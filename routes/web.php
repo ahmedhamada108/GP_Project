@@ -40,7 +40,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
     Route::post('/SendOTP', [ResetPasswordController::class,'SendOTPForgetPassword'])->name('send_otp');
     Route::post('/CheckOTP', [ResetPasswordController::class,'CheckOTP'])->name('check_otp');
     Route::post('/ForgetPasswordRequest', [ResetPasswordController::class,'ForgetPassword'])->name('forget_password_request');
-    Route::get('/{disease_name}', [SingleDiseaseController::class,'SingleDisease_view'])->name('single_disease');
+    Route::get('/disease/{disease_name?}', [SingleDiseaseController::class,'SingleDisease_view'])->name('single_disease');
 
 
     Route::group(['prefix'=>'patient','middleware' => ['CheckPatientLogin']], function()
@@ -50,9 +50,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
         Route::get('/logout', [AuthController::class,'logout'])->name('logout');
         // Route::get('/ResultCheck', [SingleDiseaseController::class,'SingleDisease_view'])->name('single_disease');
         Route::post('/ResultCheck', [DiseasesModelsHanlding::class,'SendModelRequest'])->name('result');
-
+        Route::post('edit_account',[AccountController::class,'EditAccount'])->name('edit_account');
     });// end admin routes group
 });
 Route::get('account/verify/{token}', [Auth_Patient::class, 'verifyAccount'])->name('user.verify');
 
-Route::post('admin/loaction',[AccountController::class,'EditAccount']);;
