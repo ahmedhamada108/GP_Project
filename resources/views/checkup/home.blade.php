@@ -10,8 +10,8 @@
         <div class="container">
             <div class="text">
                 <h1>Welcome, To <span>Check Up </span> App</h1>
-                <p><span>The real wealth is your health.</span><br />
-                    Our mobile app uses advanced machine learning to diagnose diseases from uploaded images of symptoms, suggests healthcare providers in the user's area, and is committed to privacy, security, and providing the best user experience.                            
+                <p><span>The real wealth is your health.</span><br>
+                    {{ $settings->website_description }}
                     <br>
                     <a href="{{ route('signup') }}">
                         <input class="submit" type="submit" value="Get Started">
@@ -52,17 +52,11 @@
     <div class="disease aboutus" id="aboutus">
         <h2 class="main-title">About Us</h2>
         <div class="container">
-            <div class="box" style="width:max-content;padding-left: 100px;">
+            <div class="box" style="width: 72pc;">
                 <div class="content">
                     <h3>Check Up App</h3>
                     <p>
-                        The mobile app is designed to help users identify and understand diseases by uploading images of their symptoms.
-                        <br>
-                        The app uses advanced machine learning models to analyze the images and provide a likely diagnosis. 
-                        <br>
-                        Additionally, the app suggests doctors and healthcare providers in the user's area who specialize in treating the diagnosed condition. 
-                        <br>
-                        The app is committed to privacy and security and is constantly improving to provide the best possible user experience.
+                        {{Str::limit($settings->about_us,300)}}
                     </p>
                 </div>
                 <div class="info">
@@ -74,29 +68,21 @@
         </div>
     </div>
     <!-- about us -->
+
     <!-- FQA-->
     <div class="fqa" id="FQA">
         <h2 class="main-title">FQA</h2>
         <div class="container" style="text-align: -webkit-center;justify-content: center;min-height: calc(60vh - 72px)!important">
             <div class="toggle">
-                <a href="#" class="togglefaq">
-                <i class="fa-solid fa-plus fa-beat-fade fa-xl" style="color: #2aaae2;"></i> How do you tell an introverted computer scientist from an extroverted computer scientist?
-                </a>
-                <div class="faqanswer">
-                    <p>An extroverted computer scientist looks at <em>your</em> shoes when he talks to you.</p>
-                </div>
-                <a href="#" class="togglefaq">
-                    <i class="fa-solid fa-plus fa-beat-fade fa-xl" style="color: #2aaae2;"></i> How do you tell an introverted computer scientist from an extroverted computer scientist?
-                </a>
-                <div class="faqanswer">
-                    <p>An extroverted computer scientist looks at <em>your</em> shoes when he talks to you.</p>
-                </div>
-                <a href="#" class="togglefaq">
-                    <i class="fa-solid fa-plus fa-beat-fade fa-xl" style="color: #2aaae2;"></i> How do you tell an introverted computer scientist from an extroverted computer scientist?
-                </a>
-                <div class="faqanswer">
-                    <p>An extroverted computer scientist looks at <em>your</em> shoes when he talks to you.</p>
-                </div>
+                @foreach($FQAs as $FQA)
+                    <a href="javascript:void(0);" class="togglefaq">
+                        <i class="fa-solid fa-plus fa-beat-fade fa-xl" style="color: #2aaae2;"></i> 
+                        {{ $FQA->quest }}
+                    </a>
+                    <div class="faqanswer">
+                        <p> {{$FQA->answer}}</p>
+                    </div>   
+                @endforeach
             </div>
         </div>
     </div>

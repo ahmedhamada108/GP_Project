@@ -67,7 +67,26 @@
                             <i class="fa-solid fa-disease"></i>                            
                           <span class="link-title">Main Diseases</span>
                         </a>
-                      </li>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('sub_diseases') }}" class="nav-link">
+                            <i class="fa-solid fa-disease"></i>                            
+                          <span class="link-title">Sub Diseases</span>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">Website Settings</li>
+                    <li class="nav-item">
+                        <a href="{{ route('fqa') }}" class="nav-link">
+                            <i class="fa-solid fa-circle-question"></i>                          
+                            <span class="link-title">FQA Questions</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('settings') }}" class="nav-link">
+                            <i class="fa-sharp fa-solid fa-gears"></i>                           
+                            <span class="link-title">Settings Website</span>
+                        </a>
+                    </li>   
                     <li class="nav-item nav-category">Theme</li>
                     <li class="nav-item">
                     @if (session('mode') === 'dark')

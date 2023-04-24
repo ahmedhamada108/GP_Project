@@ -4,7 +4,7 @@
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin_dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Main Diseases</li>
+                <li class="breadcrumb-item active" aria-current="page">FQA</li>
             </ol>
         </nav>
         @include('layouts.sessions_messages')
@@ -13,10 +13,10 @@
                 <div class="card">
                     <div class="card-body">
                       <div style="margin-bottom: 10px;" class="d-flex flex-wrap flex-row justify-content-between align-items-center">
-                        <h6 class="card-title">Main Diseases</h6> 
+                        <h6 class="card-title">FQA</h6> 
                         <div>
                           <button type="button" id="btn_add_new" style="float:right;" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add New Disease
+                            Add New FQA
                           </button>
                         </div>
                        </div>
@@ -32,15 +32,11 @@
                                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTableExample"
                                                         rowspan="1" colspan="1" aria-sort="ascending"
                                                         aria-label="Name: activate to sort column descending"
-                                                        style="width: 187.837px;">Name</th>
+                                                        style="width: 187.837px;">Question</th>
                                                     <th class="sorting" tabindex="0" aria-controls="dataTableExample"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Position: activate to sort column ascending"
-                                                        style="width: 293.6px;">Description</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTableExample"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Office: activate to sort column ascending"
-                                                        style="width: 134.512px;">Image</th>
+                                                        style="width: 293.6px;">Answer</th>
                                                     <th class="sorting" tabindex="0" aria-controls="dataTableExample"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Age: activate to sort column ascending"
@@ -49,16 +45,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              @foreach($diseases as $disease)
-                                                <tr role="row" class="odd" id="diseases{{ $disease->id }}">
-                                                  <td class="sorting_1">{{ $disease->disease_name }}</td>
-                                                  <td class="sorting_1">{{ Str::limit($disease->diseases_description,60) }}</td>
+                                              @foreach($FQAs as $FQA)
+                                                <tr role="row" class="odd" id="fqa{{ $FQA->id }}">
+                                                  <td class="sorting_1">{{ Str::limit($FQA->quest,60) }}</td>
+                                                  <td class="sorting_1">{{ Str::limit($FQA->answer,60) }}</td>
                                                   <td>
-                                                    <img src="{{ $disease->image }}" alt="" style="width: 40px; border-radius: 50%;">
-                                                  </td>
-                                                  <td>
-                                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editcategory{{$disease->id}}">Edit</a>
-                                                    <form style="padding: 0px;" class="btn btn-danger" action="{{ route('delete.main_diseases',$disease->id) }}" method="POST">
+                                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editcategory{{$FQA->id}}">Edit</a>
+                                                    <form style="padding: 0px;" class="btn btn-danger" action="{{ route('delete.fqa',$FQA->id) }}" method="POST">
                                                       @csrf
                                                       @method('delete')
                                                       <button type="submit" class="btn btn-danger" >Delete</button>
@@ -74,26 +67,26 @@
                         </div>
                       {{-- Finish Table  --}}
 
-                      @foreach($get_diseases as $disease)
+                      @foreach($get_FQA as $FQA)
                         <!-- Starting Edit Modal -->
-                          <div class="modal fade" id="editcategory{{$disease->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal fade" id="editcategory{{$FQA->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit {{ $disease->diseases_name_en }}</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit {{ $FQA->quest_en }}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="{{ route('update.main_diseases',$disease->id) }}" enctype="multipart/form-data">
+                                    <form method="POST" action="{{ route('update.fqa',$FQA->id) }}" enctype="multipart/form-data">
                                             @csrf
                                             @method('put')
                                             {{-- Disease Name AR  --}}
                                       <div class="form-group">
-                                        <label for="exampleInputUsername1">Diseases Name AR</label>
-                                        <input type="text" name="diseases_name_ar" class="form-control" style="@error('diseases_name_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $disease->diseases_name_ar }}">
-                                        @error('diseases_name_ar')
+                                        <label for="exampleInputUsername1">Question AR</label>
+                                        <input type="text" name="quest_ar" class="form-control" style="@error('quest_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $FQA->quest_ar }}">
+                                        @error('quest_ar')
                                           <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                         @enderror
                                       </div>
@@ -101,9 +94,9 @@
 
                                       {{-- Disease Name EN  --}}
                                       <div class="form-group">
-                                        <label for="exampleInputUsername1">Diseases Name EN</label>
-                                        <input type="text" name="diseases_name_en" class="form-control" style="@error('diseases_name_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $disease->diseases_name_en }}">
-                                        @error('diseases_name_en')
+                                        <label for="exampleInputUsername1">Question EN</label>
+                                        <input type="text" name="quest_en" class="form-control" style="@error('quest_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $FQA->quest_en }}">
+                                        @error('quest_en')
                                           <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                         @enderror
                                       </div>
@@ -111,9 +104,9 @@
 
                                       {{-- Disease Description AR --}}
                                       <div class="form-group">
-                                        <label for="exampleInputUsername1">Diseases Description AR</label>
-                                        <input type="text" name="diseases_description_ar" class="form-control" style="@error('diseases_description_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $disease->diseases_description_ar }}">
-                                        @error('diseases_description_ar')
+                                        <label for="exampleInputUsername1">Answer AR</label>
+                                        <input type="text" name="answer_ar" class="form-control" style="@error('answer_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $FQA->answer_ar }}">
+                                        @error('answer_ar')
                                           <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                         @enderror
                                       </div>
@@ -121,19 +114,9 @@
 
                                       {{-- Disease Description EN --}}
                                       <div class="form-group">
-                                        <label for="exampleInputUsername1">Diseases Description EN</label>
-                                        <input type="text" name="diseases_description_en" class="form-control" style="@error('diseases_description_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $disease->diseases_description_en }}">
-                                        @error('diseases_description_en')
-                                          <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
-                                        @enderror
-                                      </div>
-                                      {{-- Disease Description EN  --}}
-
-                                      {{-- Disease Description EN --}}
-                                      <div class="form-group">
-                                        <label for="exampleInputUsername1">Diseases Image</label>
-                                        <input type="file" accept="image/*" name="image" class="form-control" style="@error('image') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Image">
-                                        @error('image')
+                                        <label for="exampleInputUsername1">Answer EN</label>
+                                        <input type="text" name="answer_en" class="form-control" style="@error('answer_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" value="{{ $FQA->answer_en }}">
+                                        @error('answer_en')
                                           <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                         @enderror
                                       </div>
@@ -143,7 +126,7 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
-                                        </form>
+                                  </form>
                                     </div>
                                 </div>
                             </div>
@@ -156,19 +139,19 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Add New Main Disease</h5>
+                                      <h5 class="modal-title" id="exampleModalLabel">Add New FQA</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                       </button>
                                     </div>
-                            <form class="forms-sample" method="POST" action="{{ route('create.main_diseases') }}"  enctype="multipart/form-data">
+                            <form class="forms-sample" method="POST" action="{{ route('create.fqa') }}">
                               @csrf        
                                 <div class="modal-body">
                                     {{-- Disease Name AR  --}}
                                     <div class="form-group">
-                                      <label for="exampleInputUsername1">Diseases Name AR</label>
-                                      <input type="text" name="diseases_name_ar" class="form-control" style="@error('diseases_name_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Name AR">
-                                      @error('diseases_name_ar')
+                                      <label for="exampleInputUsername1">Question AR</label>
+                                      <input type="text" name="quest_ar" class="form-control" style="@error('quest_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Question AR">
+                                      @error('quest_ar')
                                         <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                       @enderror
                                     </div>
@@ -176,9 +159,9 @@
 
                                     {{-- Disease Name EN  --}}
                                     <div class="form-group">
-                                      <label for="exampleInputUsername1">Diseases Name EN</label>
-                                      <input type="text" name="diseases_name_en" class="form-control" style="@error('diseases_name_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Name EN">
-                                      @error('diseases_name_en')
+                                      <label for="exampleInputUsername1">Question EN</label>
+                                      <input type="text" name="quest_en" class="form-control" style="@error('quest_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Question EN">
+                                      @error('quest_en')
                                         <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                       @enderror
                                     </div>
@@ -186,9 +169,9 @@
 
                                     {{-- Disease Description AR --}}
                                     <div class="form-group">
-                                      <label for="exampleInputUsername1">Diseases Description AR</label>
-                                      <input type="text" name="diseases_description_ar" class="form-control" style="@error('diseases_description_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Description AR">
-                                      @error('diseases_description_ar')
+                                      <label for="exampleInputUsername1">Answer AR</label>
+                                      <input type="text" name="answer_ar" class="form-control" style="@error('answer_ar') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Answer AR">
+                                      @error('answer_ar')
                                         <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                       @enderror
                                     </div>
@@ -196,23 +179,14 @@
 
                                     {{-- Disease Description EN --}}
                                     <div class="form-group">
-                                      <label for="exampleInputUsername1">Diseases Description EN</label>
-                                      <input type="text" name="diseases_description_en" class="form-control" style="@error('diseases_description_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Description EN">
-                                      @error('diseases_description_en')
+                                      <label for="exampleInputUsername1">Answer EN</label>
+                                      <input type="text" name="answer_en" class="form-control" style="@error('answer_en') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Answer EN">
+                                      @error('answer_en')
                                         <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
                                       @enderror
                                     </div>
                                     {{-- Disease Description EN  --}}
 
-                                    {{-- Disease Description EN --}}
-                                    <div class="form-group">
-                                      <label for="exampleInputUsername1">Diseases Image</label>
-                                      <input type="file" accept="image/*" name="image" class="form-control" style="@error('image') border-bottom: 1px solid #dc3545 !important; @enderror" id="exampleInputUsername1" autocomplete="off" placeholder="Diseases Image">
-                                      @error('image')
-                                        <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
-                                      @enderror
-                                    </div>
-                                    {{-- Disease Description EN  --}}
                                 </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

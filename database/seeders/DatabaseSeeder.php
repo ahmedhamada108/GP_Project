@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DiseasesSeeder::class);
         $this->call(SubDiseasesSeeder::class);
         $this->call(CitiesSeeder::class);
-
+        $this->call(AdminsSeeder::class);
+        $this->call(SettingsWebsiteSeeder::class);
     }
 }

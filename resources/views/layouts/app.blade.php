@@ -105,28 +105,28 @@
                 <img src="{{ asset('imgs/Full_Logo_Light.png') }}" class="image">
                 <ul class="social">
                     <li>
-                        <a href="#">
+                        <a href="{{ $settings->facebook_url }}">
                             <i class="fab fa-facebook"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ $settings->twiiter_url }}">
                             <i class="fab fa-twitter"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ $settings->linkedin_url }}">
                             <i class="fab fa-linkedin"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ $settings->google_url }}">
                             <i class="fab fa-google"></i>
                         </a>
                     </li>
                 </ul>
                 <p class="text">
-                    
+                    Check Up website       
                 </p>
             </div>
             <div class="box">
@@ -140,16 +140,20 @@
             <div class="box">
                 <div class="line">
                     <i class="fas fa-map-marker-alt fa-fw"></i>
-                    <div class="info">Egypt, Alexandaria</div>
+                    <a href="{{ $settings->location }}">
+                        <div class="info">Egypt, Kafr El-Sheikh</div>
+                    </a>                
                 </div>
                 <div class="line">
                     <i class="fa fa-envelope fa-fw"></i>
-                    <div class="info"><a href="mailto:check@up.com">check@up.com</a></div>
+                    <div class="info"><a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a></div>
                 </div>
                 <div class="line">
                     <i class="fas fa-phone-volume fa-fw"></i>
                     <div class="info">
-                        <span>+2012345678</span>
+                        <a href="tel:{{ $settings->phone }}">
+                            {{ $settings->phone }}
+                        </a>
                     </div>
                 </div>
             </div>

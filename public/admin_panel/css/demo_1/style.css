@@ -7826,6 +7826,13 @@ pre {
       background-color: #2196F3 !important;
       border-color: #2196F3 !important;
     }
+    #filter_sub_diseases{
+      background-color: transparent;
+      border-color: transparent;
+      padding-right: 9px !important;
+      position: relative;
+      top: -9px;
+    }
     .sidebar .sidebar-body .nav .nav-item .nav-link .link-title{
       margin-left: 16px !important;
     }
