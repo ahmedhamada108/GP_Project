@@ -2,20 +2,46 @@
 
 namespace App\Http\Controllers\CheckupWebsite\Patient;
 
-use App\Http\Traits\PatientAuthTrait;
+use App\Models\settings;
 use Illuminate\Http\Request;
 use App\Models\PatientVerify;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\PatientAuthTrait;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class AuthController extends Controller
 {
     //
     use PatientAuthTrait;
     public function SignUp_view(){
-        return view('checkup.signup');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.signup',compact('settings'));
     }
     public function login_view(){
-        return view('checkup.login');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.login',compact('settings'));
     }
 
     public function verifyAccount($token)
@@ -82,7 +108,19 @@ class AuthController extends Controller
     }// end post login func
 
     public function account_view(){
-        return view('checkup.account');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.account',compact('settings'));
     }
     public function logout()
     {

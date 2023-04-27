@@ -1,15 +1,19 @@
 @extends('layouts.app')
+<?php 
+require_once app_path('Helpers/EmailMaskHelper.php');
+?>
 @section('content')
     <!-- landing -->
     <div class="landing resetpassword">  
         <div class="container">
+        @if(LaravelLocalization::getCurrentLocale() == 'en')  
             <div class="sign-in" style="margin-left: auto;margin: auto;">
                 @include('layouts.sessions_messages')
                     <h2>OTP Verification</h2>
                     <div class="card p-2 text-center">
                         <h6>Enter the verification code that has been sent to your registered email</h6>
                         <div> 
-                            <span>A code has been sent to</span> <small>ah0****@****.com</small> 
+                            <span>A code has been sent to</span> <small>{{ maskEmail(session()->get('email_patient')) }}</small> 
                         </div>
                     <form style="all:unset;" method="POST"action="{{ route('check_otp') }}">
                             @csrf     
@@ -29,6 +33,34 @@
                     </form>    
                     </div>
             </div>    
+        @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
+            <div class="sign-in" style="margin-left: auto;margin: auto;">
+              @include('layouts.sessions_messages')
+                  <h2>تاكيد الرقم السري</h2>
+                  <div class="card p-2 text-center">
+                      <h6>ادخل الرقم السري الذي تم ارساله للبريد الالكتروني المسجل</h6>
+                      <div> 
+                        <small>{{ maskEmail(session()->get('email_patient')) }}</small><span> :الرقم السري تم ارساله الي</span> 
+                      </div>
+                  <form style="all:unset;" method="POST"action="{{ route('check_otp') }}">
+                          @csrf     
+                      <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                          <input name="otp[]" style="@error('otp') border-bottom: 1px solid #dc3545 !important; @enderror" class="m-2 text-center form-control rounded" type="text" id="first" oninput='digitValidate(this)' onkeyup='tabChange(1, event)' maxlength="1" /> 
+                          <input name="otp[]" style="@error('otp') border-bottom: 1px solid #dc3545 !important; @enderror" class="m-2 text-center form-control rounded" type="text" id="second" oninput='digitValidate(this)' onkeyup='tabChange(2, event)' maxlength="1" /> 
+                          <input name="otp[]" style="@error('otp') border-bottom: 1px solid #dc3545 !important; @enderror" class="m-2 text-center form-control rounded" type="text" id="third" oninput='digitValidate(this)' onkeyup='tabChange(3, event)' maxlength="1" /> 
+                          <input name="otp[]" style="@error('otp') border-bottom: 1px solid #dc3545 !important; @enderror" class="m-2 text-center form-control rounded" type="text" id="fourth" oninput='digitValidate(this)' onkeyup='tabChange(4, event)' maxlength="1" /> 
+                          <input name="otp[]" style="@error('otp') border-bottom: 1px solid #dc3545 !important; @enderror" class="m-2 text-center form-control rounded" type="text" id="fifth" oninput='digitValidate(this)' onkeyup='tabChange(5, event)' maxlength="1" /> 
+                      </div>
+                      @error('otp')
+                      <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
+                      @enderror
+                      <div class="mt-4"> 
+                          <input id="submit" class="submit" type="submit" value="التحقق من الرقم السري" style="letter-spacing: 1px !important;width: fit-content;">
+                      </div>
+                  </form>    
+                  </div>
+            </div>
+        @endif    
             <div class="image" style="margin-right: auto;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="500.769" height="350.263" viewBox="0 0 263.769 218.263">
                     <g id="Group_1213" data-name="Group 1213" transform="translate(-83 -203.885)">

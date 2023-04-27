@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
+    
     'failed' => 'بيانات الدخول هذه غير صحيحة.',
     'password' => 'كلمه المرور خاطئه.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',

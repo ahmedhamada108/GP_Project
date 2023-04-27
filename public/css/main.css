@@ -795,6 +795,9 @@ input[type=number]::-webkit-outer-spin-button {
 /* doctors table  */
 .th_doctor{
     color: var(--main-color);
+    font-size: inherit !important;
+    text-shadow: none !important;
+    border-bottom: none !important;
 }
 
 /* Dropdown */

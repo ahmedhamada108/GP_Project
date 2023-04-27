@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\CheckUpWebsite\Patient;
 
 use App\Models\Patient;
+use App\Models\settings;
 use Illuminate\Http\Request;
 use App\Models\PatientVerify;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\PatientAuthTrait;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ResetPasswordController extends Controller
 {
@@ -14,13 +16,49 @@ class ResetPasswordController extends Controller
     use PatientAuthTrait; // Foe handling the functions that for patient auth
 
     public function ResetPasswordView(){
-        return view('checkup.reset_password_email');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.reset_password_email',compact('settings'));
     }
     public function ResetPasswordOTPView(){
-        return view('checkup.reset_password_otp');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.reset_password_otp',compact('settings'));
     }
     public function ResetPasswordChnageView(){
-        return view('checkup.reset_password_change');
+        $settings = settings::select(
+            'facebook_url',
+            'twiiter_url',
+            'linkedin_url',
+            'google_url',
+            'location',
+            'email',
+            'phone',
+            'website_description_'.LaravelLocalization::getCurrentLocale().' as website_description',
+            'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us',
+
+            )->find(1);
+        return view('checkup.reset_password_change',compact('settings'));
 
     }
     public function SendOTPForgetPassword(Request $request){

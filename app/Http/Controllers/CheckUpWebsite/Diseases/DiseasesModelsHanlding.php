@@ -20,7 +20,6 @@ class DiseasesModelsHanlding extends Controller
     //
     use RequestModelsTrait, ResponseTrait, RequestModelsWeb;
     public function SendModelRequest(Request $request){
-    //    return $this->SendRequestModel($request,$data_func);
         $url = collect(explode('/', url()->previous()))->last() ;
         switch($url){
             case "Alzheimer":

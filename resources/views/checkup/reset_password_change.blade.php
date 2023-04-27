@@ -3,6 +3,7 @@
     <!-- landing -->
     <div class="landing resetpassword">
         <div class="container">
+          @if(LaravelLocalization::getCurrentLocale() == 'en')
             <div class="sign-in" style="margin-left: auto;margin: auto;">
                 <div class="content">
                     @include('layouts.sessions_messages')
@@ -20,7 +21,27 @@
                         <input class="submit" type="submit" value="Change" style="width: 400px;">
                        </form>
                 </div>
-    </div>
+            </div>
+          @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
+            <div class="sign-in" style="margin-left: auto;margin: auto;">
+              <div class="content">
+                  @include('layouts.sessions_messages')
+                  <h2>استرجاع كلمة المرور</h2>
+                  <form class="form" method="POST"action="{{ route('forget_password_request') }}">
+                      @csrf
+                      <input class="input resetpasswordinput" name="password" type="password" placeholder="كلمة المرور الجديدة" style="text-align:end;width: 400px;@error('password') border-bottom: 1px solid #dc3545 !important; @enderror">
+                      @error('password')
+                      <p class="help is-danger" style="color: #dc3545; padding-bottom: 9px;">{{ $message }}</p>
+                      @enderror
+                      <input class="input resetpasswordinput" name="password_confirmation" type="password" placeholder="تاكيد كلمة المرور الجديدة" style="text-align:end;width: 400px;@error('email') border-bottom: 1px solid #dc3545 !important; @enderror">
+                      @error('password_confirmation')
+                      <p class="help is-danger" style=" color: #dc3545; padding-bottom: 9px;@error('password_confirmation') border-bottom: 1px solid #dc3545 !important; @enderror">{{ $message }}</p>
+                      @enderror
+                      <input class="submit" type="submit" value="تغيير كلمة المرور" style="letter-spacing: 1px;width: fit-content;">
+                    </form>
+              </div>
+            </div>
+          @endif
             <div class="image" style="margin-right: auto;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="400.994" height="400.995" viewBox="0 0 313.994 198.995">
                     <g id="Group_1212" data-name="Group 1212" transform="translate(-38.462 -29.087)">

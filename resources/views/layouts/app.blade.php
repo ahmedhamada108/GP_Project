@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Up</title>
@@ -44,16 +44,24 @@
             <img class="image" src="{{ asset('imgs/Full_Logo_Light.png') }}" alt="Logo">
             </a>
             <ul class="main-nav">
-                <li><a href="{{ url('/') }}" class="{{ request()->segment(1) == '' ? 'active' : '' }}">Home</a></li>
-                <li><a href="{{ url('/#disease') }}">Diseases</a></li>
-                <li><a href="{{ url('/#aboutus') }}">About</a></li> 
-                <li><a href="{{ url('/#FQA') }}">FQA</a></li> 
-                <li><a href="{{ url('/#contact') }}">Contact</a></li>
-                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                @if(LaravelLocalization::getCurrentLocale() == 'en')
+                    <li><a href="{{ url('/') }}" class="{{ request()->segment(1) == '' ? 'active' : '' }}">@lang('web.header.home')</a></li>
+                    <li><a href="{{ url('/#disease') }}">@lang('web.header.diseases')</a></li>
+                    <li><a href="{{ url('/#aboutus') }}">@lang('web.header.about')</a></li> 
+                    <li><a href="{{ url('/#FQA') }}">@lang('web.header.FQA')</a></li> 
+                    <li><a href="{{ url('/#contact') }}">@lang('web.header.contact')</a></li>
+                
+                @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
+                    <li><a href="{{ url('ar/') }}" class="{{ request()->segment(1) == '' ? 'active' : '' }}">الرئيسية</a></li>
+                    <li><a href="{{ url('ar/#disease') }}">الامراض</a></li>
+                    <li><a href="{{ url('ar/#aboutus') }}">عننا</a></li> 
+                    <li><a href="{{ url('ar/#FQA') }}">الاسئلة الشائعة</a></li> 
+                    <li><a href="{{ url('ar/#contact') }}">تواصل معنا</a></li>
+                @endif
+                @foreach(LaravelLocalization::getSupportedLocales('hideDefaultLocaleInURL = false') as $localeCode => $properties)
                     <li>
                         @if($localeCode == 'en')
                             @if(LaravelLocalization::getCurrentLocale() == 'en')
-                               
                             @else
                                 <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     <img style="width: 30px;" src="{{asset('imgs/icons8-geography.gif')}}" > {{ $properties['native'] }}
@@ -75,20 +83,37 @@
                     <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
                         <img style="width: 30px;" src="{{asset('imgs/icons8-user.gif')}}" > 
                     </a>
-                    <ul id="drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a href="{{ route('account_view') }}">
-                            <img style="width: 30px;" src="{{asset('imgs/icons8-user-96.png')}}" > 
-                            Account
-                        </a></li>
-                        <li><a href="{{ route('history_view') }}">
-                            <img style="width: 30px;" src="{{asset('imgs/icons8-history-96.png')}}" > 
-                            History
-                        </a></li>
-                        <li><a href="{{ route('logout') }}">
-                            <img style="width: 25px;" src="{{asset('imgs/icons8-logout-96.png')}}" > 
-                            Logout
-                        </a></li>
-                    </ul>
+                    @if(LaravelLocalization::getCurrentLocale() == 'en')
+                        <ul id="drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a href="{{ route('account_view') }}">
+                                <img style="width: 30px;" src="{{asset('imgs/icons8-user-96.png')}}" > 
+                                Account
+                            </a></li>
+                            <li><a href="{{ route('history_view') }}">
+                                <img style="width: 30px;" src="{{asset('imgs/icons8-history-96.png')}}" > 
+                                History
+                            </a></li>
+                            <li><a href="{{ route('logout') }}">
+                                <img style="width: 25px;" src="{{asset('imgs/icons8-logout-96.png')}}" > 
+                                Logout
+                            </a></li>
+                        </ul>          
+                    @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
+                        <ul id="drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a href="{{ route('account_view') }}">
+                                <img style="width: 30px;" src="{{asset('imgs/icons8-user-96.png')}}" > 
+                                الحساب
+                            </a></li>
+                            <li><a href="{{ route('history_view') }}">
+                                <img style="width: 30px;" src="{{asset('imgs/icons8-history-96.png')}}" > 
+                                السجل
+                            </a></li>
+                            <li><a href="{{ route('logout') }}">
+                                <img style="width: 25px;" src="{{asset('imgs/icons8-logout-96.png')}}" > 
+                                تسجيل الخروج
+                            </a></li>
+                        </ul>
+                    @endif
                 </li>
             @endauth
             </ul>
@@ -125,40 +150,69 @@
                         </a>
                     </li>
                 </ul>
-                <p class="text">
-                    Check Up website       
-                </p>
             </div>
-            <div class="box">
-                <ul class="links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#illnesses">Illnesses</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="box">
-                <div class="line">
-                    <i class="fas fa-map-marker-alt fa-fw"></i>
-                    <a href="{{ $settings->location }}">
-                        <div class="info">Egypt, Kafr El-Sheikh</div>
-                    </a>                
+            @if(LaravelLocalization::getCurrentLocale() == 'en')
+                <div class="box">
+                    <ul class="links">
+                        <li><a href="{{ url('en/') }}">Home</a></li>
+                        <li><a href="{{ url('en/#aboutus') }}">About</a></li>
+                        <li><a href="{{ url('en/#disease') }}">Diseases</a></li>
+                        <li><a href="{{ url('en/#contact') }}">Contact</a></li>
+                    </ul>
                 </div>
-                <div class="line">
-                    <i class="fa fa-envelope fa-fw"></i>
-                    <div class="info"><a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a></div>
-                </div>
-                <div class="line">
-                    <i class="fas fa-phone-volume fa-fw"></i>
-                    <div class="info">
-                        <a href="tel:{{ $settings->phone }}">
-                            {{ $settings->phone }}
-                        </a>
+                <div class="box">
+                    <div class="line">
+                        <i class="fas fa-map-marker-alt fa-fw"></i>
+                        <a href="{{ $settings->location }}">
+                            <div class="info">Egypt, Kafr El-Sheikh</div>
+                        </a>                
                     </div>
+                    <div class="line">
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <div class="info"><a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a></div>
+                    </div>
+                    <div class="line">
+                        <i class="fas fa-phone-volume fa-fw"></i>
+                        <div class="info">
+                            <a href="tel:{{ $settings->phone }}">
+                                {{ $settings->phone }}
+                            </a>
+                        </div>
+                    </div>
+                </div>        
+            @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
+                <div class="box">
+                    <ul class="links">
+                        <li><a href="{{ url('ar/') }}">الرئيسية</a></li>
+                        <li><a href="{{ url('ar/#aboutus') }}">عننا</a></li>
+                        <li><a href="{{ url('ar/#disease') }}">الامراض</a></li>
+                        <li><a href="{{ url('ar/#contact') }}">تواصل معنا</a></li>
+                    </ul>
                 </div>
-            </div>
+                <div class="box">
+                    <div class="line">
+                        <i class="fas fa-map-marker-alt fa-fw"></i>
+                        <a href="{{ $settings->location }}">
+                            <div class="info">مصر, كفر الشيخ</div>
+                        </a>                
+                    </div>
+                    <div class="line">
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <div class="info"><a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a></div>
+                    </div>
+                    <div class="line">
+                        <i class="fas fa-phone-volume fa-fw"></i>
+                        <div class="info">
+                            <a href="tel:{{ $settings->phone }}">
+                                {{ $settings->phone }}
+                            </a>
+                        </div>
+                    </div>
+                </div>  
+            @endif
+
         </div>
-        <p class="copyright">COPYRIGHT 2022 <span>CheckUp</span>© AllRightS Reserved</p>
+        <p class="copyright">@lang('web.footer_section.COPYRIGHT_2023_CHECKUP_ALL_RIGHTS_RESERVED')</p>
     </div>
     <!-- footer -->
     <!-- scroll to up -->

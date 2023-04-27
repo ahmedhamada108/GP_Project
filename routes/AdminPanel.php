@@ -29,7 +29,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale().'/Admin','middleware'
 {
     Route::get('login', [AuthController::class,'login_view'])->name('admin_login');
     Route::post('/postLogin', [AuthController::class,'postLoginAdmin'])->name('post_login_admin');
-
+    Route::get('/test',function(Request $request){
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.ip2location.io/', [
+            'query' => [
+                'key' => '0E55831D5C4EFBB811C7B8341623F450',
+                'ip' => $request->ip()
+            ]
+        ]);
+        
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        return $data;
+    });
 
     Route::group(['middleware' => ['CheckAdminLogin']], function()
     {
