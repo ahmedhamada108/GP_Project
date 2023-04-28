@@ -111,11 +111,10 @@
   function showPosition(position) {
     const lat = position.coords.latitude ;
     const lon = position.coords.longitude ;
-
-    fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}`)
+    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=40da2b1ae0d64ef8903ee23d94e204d1`)
       .then(response => response.json())
       .then(data =>
-       state.value = data.address.state.replace('Governorate', '').replace(/\s/g, '')
+       state.value = data.features[0].properties.city
        )
       .catch(error => console.error(error));
   }

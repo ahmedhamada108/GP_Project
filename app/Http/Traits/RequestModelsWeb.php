@@ -54,18 +54,6 @@ trait RequestModelsWeb
                     'about_us_'.LaravelLocalization::getCurrentLocale().' as about_us'
         
                     )->find(1);
-                    // GET the Current location 
-                    $client = new Client();
-                    $response = $client->request('GET', 'https://api.ip2location.io/', [
-                        'query' => [
-                            'key' => '0E55831D5C4EFBB811C7B8341623F450',
-                            'ip' => $request->ip()
-                        ]
-                    ]);
-                    
-                    $body = $response->getBody()->getContents();
-                    $data = json_decode($body, true);
-                    $city_name =  $data['city_name'];
                 if($result_value == "Non Dementia" || $result_value == 'Normal'){
                     if(LaravelLocalization::getCurrentLocale()=="en"){
                         $VezzetaDoctors = null;
@@ -78,11 +66,11 @@ trait RequestModelsWeb
                     }
                 }else{
                     if(LaravelLocalization::getCurrentLocale()=="en"){
-                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($city_name,$data_func['specialization_en']);
+                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($request->city_patient,$data_func['specialization_en']);
 
                         return view('checkup.result',compact(['sub_disease','VezzetaDoctors','settings']));
                     }else{
-                        $VezzetaDoctors = $Doctors->GetDoctorArabic($city_name,$data_func['specialization_en']);
+                        $VezzetaDoctors = $Doctors->GetDoctorArabic($request->city_patient,$data_func['specialization_en']);
                         
                         return view('checkup.result',compact(['sub_disease','VezzetaDoctors','settings']));
                     }
