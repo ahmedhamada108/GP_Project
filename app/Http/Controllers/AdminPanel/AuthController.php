@@ -6,6 +6,9 @@ use App\Http\Traits\PatientAuthTrait;
 use Illuminate\Http\Request;
 use App\Models\PatientVerify;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\history;
+use App\Models\Patient;
 
 class AuthController extends Controller
 {
@@ -31,7 +34,10 @@ class AuthController extends Controller
         }
     }// end post login func
     public function dashboard(){
-        return view('AdminPanel.dashboard');
+        $patients = Patient::count();
+        $diagnoses = history::count();
+        $admins = Admin::count();
+        return view('AdminPanel.dashboard',compact(['patients','diagnoses','admins']));
     }
 
     public function logout()

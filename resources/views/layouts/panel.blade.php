@@ -21,8 +21,10 @@
     <!-- Layout styles -->
     @if (session('mode') === 'dark')
         <link rel="stylesheet" href="{{ asset('admin_panel/css/demo_2/style.css') }}">
+    @elseif(session('mode') === 'light')
+        <link rel="stylesheet" href="{{ asset('admin_panel/css/demo_1/style.css') }}">
     @else
-    <link rel="stylesheet" href="{{ asset('admin_panel/css/demo_1/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin_panel/css/demo_2/style.css') }}">
     @endif
 
     <!-- End layout styles -->
@@ -87,17 +89,34 @@
                             <span class="link-title">Settings Website</span>
                         </a>
                     </li>   
+                    <li class="nav-item nav-category">Members</li>
+                    <li class="nav-item">
+                        <a href="{{ route('patients') }}" class="nav-link">
+                            <i class="fa-sharp fa-solid fa-users"></i>                            
+                            <span class="link-title">Patients Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admins') }}" class="nav-link">
+                            <i class="fa-solid fa-user-group"></i>                           
+                            <span class="link-title">Admins Management</span>
+                        </a>
+                    </li> 
                     <li class="nav-item nav-category">Theme</li>
                     <li class="nav-item">
-                    @if (session('mode') === 'dark')
-                        <a href="{{ route('change_mode', ['mode' => request()->input('mode','light')]) }}" class="nav-link">
+                        @if (session('mode') === 'dark')
+                            <a href="{{ route('change_mode', ['mode' => request()->input('mode','light')]) }}" class="nav-link">
+                                <i class="fa-sharp fa-solid fa-lightbulb"></i>                        
+                                <span class="link-title">Light Mode</span>
+                        @elseif(session('mode') === 'light')
+                            <a href="{{ route('change_mode', ['mode' => request()->input('mode','dark')]) }}" class="nav-link">
+                                <i class="fa-sharp fa-solid fa-lightbulb"></i>                        
+                                <span class="link-title">Dark Mode</span>
+                        @else
+                            <a href="{{ route('change_mode', ['mode' => request()->input('mode','light')]) }}" class="nav-link">
                             <i class="fa-sharp fa-solid fa-lightbulb"></i>                        
                             <span class="link-title">Light Mode</span>
-                    @else
-                        <a href="{{ route('change_mode', ['mode' => request()->input('mode','dark')]) }}" class="nav-link">
-                            <i class="fa-sharp fa-solid fa-lightbulb"></i>                        
-                            <span class="link-title">Dark Mode</span>
-                    @endif
+                        @endif
                     </li>
                 </ul>
             </div>

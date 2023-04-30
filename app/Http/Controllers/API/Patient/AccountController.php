@@ -6,11 +6,29 @@ use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\PatientAuthTrait;
+use App\Models\Patient;
 
-class UpdateAccountController extends Controller
+class AccountController extends Controller
 {
     //
     use ResponseTrait, PatientAuthTrait;
+    public function ViewAccount(){
+        try{
+            if(auth('patient-api')->id() != null){
+                $patient = Patient::find(auth('patient-api')->id());
+                if($patient){
+                    $patient->image = ($patient->image == "https://placehold.co/80x80?text=user+image") ? "https://placehold.co/80x80?text=user+image" : env('APP_URL').$patient->image;
+                    unset($patient->is_email_verified);
+                }
+                return $this->returnData("Account Info",$patient);
+            }else{
+                return $this->returnError('E500', 'Please login to your account');
+                // check login student
+            }      
+        }catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+    }
     public function UpdateAccount(Request $request){
         try{
             if(auth('patient-api')->id() != null){
@@ -36,7 +54,7 @@ class UpdateAccountController extends Controller
                 $this->ReturnValidate($data,$rules);
                 // update the account
                 $this->Update_Patient(auth('patient-api')->id(),$data);
-                return $this->returnSuccessMessage("His Aaccount info has been changed");
+                return $this->returnSuccessMessage("You Aaccount info has been changed");
             }else{
                 return $this->returnError('E500', 'Please login to your account');
                 // check login student

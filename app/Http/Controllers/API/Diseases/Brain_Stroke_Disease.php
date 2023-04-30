@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\Long_LatRequest;
 use App\Http\Traits\VezeetaScraping;
 use App\Models\SubDiseasesDescription;
 use App\Http\Traits\RequestModelsTrait;
@@ -15,7 +16,7 @@ use App\Http\Traits\RequestModelsTrait;
 class Brain_Stroke_Disease extends Controller
 {
     //
-    use RequestModelsTrait, ResponseTrait;
+    use RequestModelsTrait, ResponseTrait, Long_LatRequest;
     public function SendBrainStroke(Request $request){
         try{
             if(auth('patient-api')->id() != null){
@@ -42,12 +43,13 @@ class Brain_Stroke_Disease extends Controller
                         'sub_disease_'.app()->getLocale().' as sub_disease',
                         'description_'.app()->getLocale().' as description'
                     )->where('sub_disease_en','LIKE','%'.$result_value.'%')->first();
-                $history = history::create([
+                history::create([
                     'patient_id' => auth('patient-api')->id(),
                     'disease_id' => $disease->id,
                     'sub_disease_id' => $sub_disease->id,
                     'image' => $data['image']
                 ]);
+                $location_country = $this->LocationRequest($request->long,$request->lat);
                 $Doctors = new VezeetaScraping();
                 if($sub_disease->sub_disease == 'Normal' || $sub_disease->sub_disease == 'طبيعي'){
                     if(App::getLocale()=="en"){
@@ -61,11 +63,11 @@ class Brain_Stroke_Disease extends Controller
                     }
                 }else{
                     if(App::getLocale()=="en"){
-                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($request->city_patient,'neurology');;
+                        $VezzetaDoctors = $Doctors->GetDoctorEnglish($location_country,'neurology');;
                         $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
                         return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }else{
-                        $VezzetaDoctors = $Doctors->GetDoctorArabic($request->city_patient,'مخ-واعصاب');
+                        $VezzetaDoctors = $Doctors->GetDoctorArabic($location_country,'مخ-واعصاب');
                         $sub_disease->setAttribute('Total_Vezzeta_Doctors',count($VezzetaDoctors));
                         return $this->returnDataMultiArray('Result Check',$sub_disease,'Vezzeta Doctors',$VezzetaDoctors);
                     }

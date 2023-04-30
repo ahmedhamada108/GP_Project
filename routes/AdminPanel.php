@@ -3,6 +3,7 @@
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPanel\FQAController;
 use App\Http\Controllers\AdminPanel\AuthController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\AdminPanel\SettingsController;
 use App\Http\Controllers\AdminPanel\SubDiseasesController;
 use App\Http\Controllers\AdminPanel\MainDiseasesController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\AdminPanel\AdminsManagementController;
+use App\Http\Controllers\AdminPanel\PatientsManagementController;
 
 
 /*
@@ -30,17 +33,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale().'/Admin','middleware'
     Route::get('login', [AuthController::class,'login_view'])->name('admin_login');
     Route::post('/postLogin', [AuthController::class,'postLoginAdmin'])->name('post_login_admin');
     Route::get('/test',function(Request $request){
-        $client = new Client();
-        $response = $client->request('GET', 'https://api.ip2location.io/', [
-            'query' => [
-                'key' => '0E55831D5C4EFBB811C7B8341623F450',
-                'ip' => $request->ip()
-            ]
+        $apiKey = "40da2b1ae0d64ef8903ee23d94e204d1";
+        $response = Http::get('https://api.geoapify.com/v1/geocode/reverse', [
+            'lat' => 31.1191646,
+            'lon' => 30.9485132,
+            'apiKey' => $apiKey,
         ]);
         
-        $body = $response->getBody()->getContents();
-        $data = json_decode($body, true);
-        return $data;
+        if ($response->ok()) {
+            $response = json_decode($response);
+           return $response->features[0]->properties->state;
+        } else {
+            return 'error';
+        }
     });
 
     Route::group(['middleware' => ['CheckAdminLogin']], function()
@@ -64,6 +69,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale().'/Admin','middleware'
 
         Route::put('UpdateSettings/{id?}', [SettingsController::class,'UpdateSettings'])->name('update.settings');
 
+        Route::get('PatientsManagements', [PatientsManagementController::class,'PatientsManagement'])->name('patients');
+        Route::post('CreatePatient', [PatientsManagementController::class,'CreatePatient'])->name('create.patients');
+        Route::put('UpdatePatient/{id}', [PatientsManagementController::class,'UpdatePatient'])->name('update.patients');
+        Route::delete('DeletePatient/{id}', [PatientsManagementController::class,'Destroy'])->name('delete.patients');
+       
+        Route::get('AdminsManagements', [AdminsManagementController::class,'AdminsManagement'])->name('admins');
+        Route::post('CreateAdmin', [AdminsManagementController::class,'CreateAdmin'])->name('create.admins');
+        Route::put('UpdateAdmin/{id}', [AdminsManagementController::class,'UpdateAdmin'])->name('update.admins');
+        Route::delete('DeleteAdmin/{id}', [AdminsManagementController::class,'Destroy'])->name('delete.admins');
+       
         Route::get('Change_mode', [AuthController::class,'DarkLight'])->name('change_mode');
         Route::get('/logout', [AuthController::class,'logout'])->name('logout_admin');
     });// end admin routes group
