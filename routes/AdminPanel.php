@@ -1,10 +1,12 @@
 <?php
-
 use GuzzleHttp\Client;
+use Mpdf\Mpdf;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\AdminPanel\FQAController;
 use App\Http\Controllers\AdminPanel\AuthController;
 use App\Http\Controllers\AdminPanel\SettingsController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\AdminPanel\MainDiseasesController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\AdminPanel\AdminsManagementController;
 use App\Http\Controllers\AdminPanel\PatientsManagementController;
+// use App\Http\Controllers\MyPDFGenerator;
 
 
 /*
@@ -32,6 +35,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale().'/Admin','middleware'
 {
     Route::get('login', [AuthController::class,'login_view'])->name('admin_login');
     Route::post('/postLogin', [AuthController::class,'postLoginAdmin'])->name('post_login_admin');
+    
     Route::get('/test',function(Request $request){
         $apiKey = "40da2b1ae0d64ef8903ee23d94e204d1";
         $response = Http::get('https://api.geoapify.com/v1/geocode/reverse', [
@@ -46,6 +50,25 @@ Route::group(['prefix' => LaravelLocalization::setLocale().'/Admin','middleware'
         } else {
             return 'error';
         }
+    });
+
+    Route::get('/test1',function(Request $request){
+        return view('welcome');
+    });
+    Route::get('/QR',function(Request $request){
+
+        $image = QrCode::size(300)->generate('https://google.com');
+        
+        $data= [
+            'name' => 'test',
+            'logo' => $image
+        ];
+        $pdf = PDF::loadView('welcome',$data);
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->download('myPDF.pdf');
+        // return $image;
+        // return view('welcome'); 
+        
     });
 
     Route::group(['middleware' => ['CheckAdminLogin']], function()

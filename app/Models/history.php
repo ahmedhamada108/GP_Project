@@ -29,8 +29,9 @@ class history extends Model
     }
     public function GetPatientHistory($patient_id){
        $history = history::with(
-            ['disease','disease:id,diseases_name_'.app()->getLocale().' as disease_name',
-            'sub_disease','sub_disease:id,sub_disease_'.app()->getLocale().' as Sub_disease_name'
+            [
+                'disease','disease:id,diseases_name_'.app()->getLocale().' as disease_name',
+                'sub_disease','sub_disease:id,sub_disease_'.app()->getLocale().' as Sub_disease_name,description_en'
             ])->where('patient_id',$patient_id)->get();
             return $history;
     }

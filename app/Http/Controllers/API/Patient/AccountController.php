@@ -7,6 +7,8 @@ use App\Http\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\PatientAuthTrait;
 use App\Models\Patient;
+use Illuminate\Validation\Rule;
+
 
 class AccountController extends Controller
 {
@@ -33,11 +35,17 @@ class AccountController extends Controller
         try{
             if(auth('patient-api')->id() != null){
                 $rules = $request->validate([
-                    'name'=> 'min:6',
-                    'email' => 'email |unique:patient',
-                    'password' => 'min:6|confirmed',
-                    'image' => 'image'
+                    'name' =>'required',
+                    'email'=>
+                    [
+                        'required',
+                        'email',
+                        Rule::unique('patient')->ignore(auth('patient-api')->id())
+                    ],
+                    'password' => 'sometimes| min:6|confirmed',
+                    'image' => 'nullable',
                 ]);
+                // return $rules;
                 $data = [
                     'name'=>$request->name,
                     'email'=>$request->email,
@@ -63,4 +71,34 @@ class AccountController extends Controller
             return $this->returnError($ex->getCode(), $ex->getMessage());
         } 
     }
+
+    public function UpdateImageAccount(Request $request){
+        try{
+                if(auth('patient-api')->id() != null){
+                    $rules = $request->validate([
+                        'image' => 'nullable'
+                    ]);                                  
+                    if($request->hasFile('image')){
+                        $file_extension = $request->image->getClientOriginalExtension();
+                        $img_name = time() . '.' . $file_extension;
+                        $path = storage_path('app/public/PatientsImages');
+                        $request->image->move($path, $img_name);
+                        $data['image'] = '/storage/PatientsImages/'.$img_name;
+                    }else{
+                        $data['image'] =null;
+                    }
+                    // update the account
+                    $patient = Patient::find(auth('patient-api')->id())->first()->update([
+                    'image'=> $data['image']
+                    ]);
+                    return $this->returnSuccessMessage("You Aaccount info has been changed");
+                }else{
+                    return $this->returnError('E500', 'Please login to your account');
+                    // check login student
+                }      
+            }catch (\Exception $ex) {
+                return $this->returnError($ex->getCode(), $ex->getMessage());
+            } 
+    }
+
 }

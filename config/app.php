@@ -139,6 +139,8 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        ZanySoft\LaravelPDF\PdfServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class, // [1] This will register the Package in the laravel echo system
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -230,6 +232,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'PDF' => ZanySoft\LaravelPDF\Facades\PDF::class,
+
 
     ],
 

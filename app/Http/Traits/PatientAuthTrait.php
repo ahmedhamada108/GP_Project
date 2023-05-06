@@ -32,16 +32,25 @@ trait PatientAuthTrait
     }
     private function Update_Patient($id,array $data){
       $patient = Patient::where('id', $id)->firstOrFail();
-      $updateData = [
+      if($data['image']==null){
+        $updateData = [
           'name' => $data['name'],
           'email' => $data['email'],
-          'image' => $data['image'] ?? $patient->image
-      ];
-
-      if (isset($data['password'])) {
+          'image' => $patient->image
+        ];
+          if (isset($data['password'])) {
+            $updateData['password'] = $data['password'];
+        }
+      }else{
+        $updateData = [
+          'name' => $data['name'],
+          'email' => $data['email'],
+          'image' => $data['image']
+        ];
+        if (isset($data['password'])) {
           $updateData['password'] = $data['password'];
+        }
       }
-
       return $patient->update($updateData);
     }
     private function CreateOTPSendIt($id,$request){

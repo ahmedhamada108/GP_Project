@@ -47,6 +47,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware'=>['chang
     {
         Route::get('/account', [AuthController::class,'account_view'])->name('account_view');
         Route::get('/history', [HistoryController::class,'History_view'])->name('history_view');
+        Route::delete('/DeleteHistory', [HistoryController::class,'DeleteHistory'])->name('delete.history');
+
         Route::get('/logout', [AuthController::class,'logout'])->name('logout');
         // Route::get('/ResultCheck', [SingleDiseaseController::class,'SingleDisease_view'])->name('single_disease');
         Route::post('/ResultCheck', [DiseasesModelsHanlding::class,'SendModelRequest'])->name('result');

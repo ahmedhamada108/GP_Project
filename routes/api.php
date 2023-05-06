@@ -49,6 +49,8 @@ Route::group(['middleware'=>['change.lang']], function(Router $router)
     Route::get('PatientHistory', [PatientHistoryController::class,'PatientHistory']);
     Route::post('UpdateAccount', [AccountController::class,'UpdateAccount']);
     Route::get('ViewInfoAccount', [AccountController::class,'ViewAccount']);
+    Route::post('UpdateImageAccount',[AccountController::class,'UpdateImageAccount']);
+    Route::Delete('DeleteHistory', [PatientHistoryController::class,'DeleteHistory']);
 
 
 });
